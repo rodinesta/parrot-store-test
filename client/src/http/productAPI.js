@@ -1,13 +1,13 @@
 import {$authHost, $host} from "./index";
 import "../components/modals/createProduct";
 
-export const createProduct = async (title, price, information, genuId) => {
-    const {data} = await $authHost.post('api/product', {title, price, information, genuId})
+export const createProduct = async (title, price, information, genuId, userId) => {
+    const {data} = await $authHost.post('api/product', {title, price, information, genuId, userId})
     return data
 }
-export const receiveProducts = async (genusId) => {
+export const receiveProducts = async (genuId) => {
     const {data} = await $host.get('api/product', {params: {
-            genusId
+            genuId
         }})
     return data
 }

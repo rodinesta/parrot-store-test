@@ -19,7 +19,7 @@ const CreateProduct = observer(({show, onHide}) => {
 
     useEffect(() => {
         getGenus().then(data => product.setGenus(data))
-    })
+    }, [])
 
     const addProduct = async () => {
         const selectedGenus = product.selectedGenus.id

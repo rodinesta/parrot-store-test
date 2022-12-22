@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import GenusBar from "../components/GenusBar";
 import ProductList from "../components/ProductList";
@@ -10,14 +10,15 @@ const HomePage = observer(() => {
     const {product} = useContext(Context)
 
     useEffect(() => {
-
-        receiveProducts().then(data => product.setProducts(data))
+        getGenus().then(data => product.setGenus(data))
+        receiveProducts([1, 2, 3]).then(data => {
+            product.setProducts(data.rows)
+        })
     }, [])
 
     useEffect(() => {
-        getGenus().then(data => product.setGenus(data))
-        receiveProducts(product.selectedGenus.id).then(data =>{
-            product.setProducts(data)
+        receiveProducts(product.selectedGenus.id).then(data => {
+            product.setProducts(data.rows)
         })
     }, [product.selectedGenus])
 
