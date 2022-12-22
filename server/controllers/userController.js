@@ -1,7 +1,8 @@
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
-const {User} = require('../models/models')
+const {User, Product, Genus} = require('../models/models')
 const jwt = require('jsonwebtoken')
+const {decode} = require("jsonwebtoken");
 
 const generateJwt = (id, login, roleId) => {
     return jwt.sign(
@@ -44,6 +45,30 @@ class UserController {
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.login, req.user.roleId)
         return res.json({token})
+    }
+
+    async getOne(req, res, next) {
+        try {
+            const {id} = req.query
+            const user = await User.findOne(
+                {
+                    where: {id}
+                },
+            )
+            return res.json(user)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
+    async putInfromation(req, res, next) {
+        try {
+            const {id, firstName, secondName, lastName, phoneNumber} = req.body
+            const user = User.update({firstName, secondName, lastName, phoneNumber}, {where: {id}})
+
+            return res.json(user);
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 }
 

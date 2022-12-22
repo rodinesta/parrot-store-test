@@ -44,9 +44,7 @@ const Genus = sequelize.define('genu', {
 
 //MANY-to-MANY TABLES
 
-const UserProduct = sequelize.define('user_product', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
-})
+
 
 const ArticleComment = sequelize.define('article_comment', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
@@ -57,6 +55,8 @@ const ArticleComment = sequelize.define('article_comment', {
 Genus.hasMany(Product)
 Product.belongsTo(Genus)
 
+User.hasMany(Product)
+Product.belongsTo(User)
 
 Role.hasMany(User)
 User.belongsTo(Role)
@@ -68,9 +68,6 @@ User.hasMany(Comment)
 Comment.belongsTo(User)
 
 // MANY-to-MANY
-
-User.belongsToMany(Product, {through: UserProduct})
-Product.belongsToMany(User, {through: UserProduct})
 
 Article.belongsToMany(Comment, {through: ArticleComment})
 Comment.belongsToMany(Article, {through: ArticleComment})

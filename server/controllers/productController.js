@@ -23,13 +23,15 @@ class ProductController {
         }
     }
 
-    async getAll(req, res) {
-        let products = await Product.findAll(
-            {
-                include: [{model: Genus}]
-            });
+    async getAll(req, res, next) {
+        try{
+            let {genuId} = req.query
+            let products = await Product.findAndCountAll({where: {genuId}});
 
-        return res.json(products)
+            return res.json(products)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getOne(req, res) {
