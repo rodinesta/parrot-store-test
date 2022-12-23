@@ -4,6 +4,7 @@ import {Context} from "../../index";
 import {createProduct, getGenus} from "../../http/productAPI";
 import {observer} from "mobx-react-lite";
 import {toFormData} from "axios";
+import jwtDecode from "jwt-decode";
 
 const CreateProduct = observer(({show, onHide}) => {
     const {product} = useContext(Context)
@@ -12,7 +13,7 @@ const CreateProduct = observer(({show, onHide}) => {
     const [information, setInformation] = useState('')
     const [price, setPrice] = useState(0)
     const [file, setFile] = useState(null)
-
+    const token = jwtDecode(localStorage.getItem('token'))
     const selectFile = e => {
         setFile(e.target.files[0])
     }
@@ -21,9 +22,18 @@ const CreateProduct = observer(({show, onHide}) => {
         getGenus().then(data => product.setGenus(data))
     }, [])
 
-    const addProduct = async () => {
-        const selectedGenus = product.selectedGenus.id
-        await createProduct(title, price, information, selectedGenus).then(data => onHide())
+    const addProduct = () => {
+        // const selectedGenus = product.selectedGenus.id
+
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('information', information)
+        formData.append('price', `${price}`)
+        formData.append('genuId', product.selectedGenus.id)
+        formData.append('userId', token.id)
+        formData.append('img', file)
+        createProduct(formData).then(data => onHide())
+        // await createProduct(title, price, information, selectedGenus, file).then(data => onHide())
     }
 
     return (

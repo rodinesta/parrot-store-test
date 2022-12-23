@@ -14,16 +14,18 @@ const SellerPage = observer(() => {
     const {product} = useContext(Context)
     const {user} = useContext(Context)
     const token = jwtDecode(localStorage.getItem('token'))
+    const tokenId = token.id
     const [productVisible, setProductVisible] = useState(false)
     const [informationVisible, setInformationVisible] = useState(false)
 
     useEffect(() => {
         getUser(token.id).then(data => user.setUser(data))
         getGenus().then(data => product.setGenus(data))
-        receiveProducts([1, 2, 3]).then(data => {
+        receiveProducts(null, tokenId).then(data => {
             product.setProducts(data.rows)
         })
     }, [])
+
 
     return (
         <Container className="mt-3">
@@ -40,7 +42,7 @@ const SellerPage = observer(() => {
                 <Col md={6}>
                     <h1>Птицы на продаже</h1>
                     <Row className="d-flex">
-                        {product.products.map(product =>
+                        {product.products?.map(product =>
                             <ProductItem key={product.id} product={product}/>
                         )}
                     </Row>

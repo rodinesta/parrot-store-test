@@ -11,13 +11,13 @@ const HomePage = observer(() => {
 
     useEffect(() => {
         getGenus().then(data => product.setGenus(data))
-        receiveProducts([1, 2, 3]).then(data => {
+        receiveProducts(null, null).then(data => {
             product.setProducts(data.rows)
         })
     }, [])
 
     useEffect(() => {
-        receiveProducts(product.selectedGenus.id).then(data => {
+        receiveProducts(product.selectedGenus.id, null).then(data => {
             product.setProducts(data.rows)
         })
     }, [product.selectedGenus])

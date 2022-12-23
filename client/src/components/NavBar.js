@@ -2,15 +2,17 @@ import React, {useContext} from 'react';
 import {Context} from "../index";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import {LOGIN_ROUTE, REGISTRATION_ROUTE, SELLER_ROUTE} from "../utils/consts";
+import {HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SELLER_ROUTE} from "../utils/consts";
 
 const NavBar = () => {
     const {user} = useContext(Context)
     const navigate = useNavigate()
 
     const logOut = () => {
+        localStorage.removeItem('token')
         user.setUser({})
         user.setIsAuth(false)
+        console.log(user)
     }
 
         return (
@@ -21,7 +23,7 @@ const NavBar = () => {
                         {user.isAuth ?
                             <Nav>
                                 <Nav.Link href={SELLER_ROUTE}>Профиль</Nav.Link>
-                                <Button onClick={() => logOut()}>
+                                <Button onClick={() => logOut()} href={HOME_ROUTE}>
                                     Выйти
                                 </Button>
                             </Nav>

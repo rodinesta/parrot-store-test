@@ -7,7 +7,7 @@ const GenusBar = observer(() => {
     const {product} = useContext(Context)
     return (
         <ListGroup>
-            {product.genus.map(genus =>
+            {product.genus?.map(genus =>
                 <ListGroup.Item
                     style={{cursor: 'pointer'}}
                     active={genus.id === product.selectedGenus.id}

@@ -1,12 +1,18 @@
 const {Product, Genus} = require('../models/models')
 const ApiError = require('../error/ApiError')
 const {where} = require("sequelize");
+const uuid = require('uuid')
+const path = require('path')
 
 class ProductController {
     async create(req, res, next) {
         try{
-            let {title, price, information, genuId, genus} = req.body
-            const product = await Product.create({title, price, information,genuId})
+            let {title, price, information, genuId, genus, userId} = req.body
+            const {img} = req.files
+            let fileName = uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+
+            const product = await Product.create({title, price, information, genuId, userId, img: fileName})
 
             if (genus) {
                 genus = JSON.parse(genus)
@@ -17,7 +23,6 @@ class ProductController {
             }
 
             return res.json(product)
-
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -25,8 +30,17 @@ class ProductController {
 
     async getAll(req, res, next) {
         try{
-            let {genuId} = req.query
-            let products = await Product.findAndCountAll({where: {genuId}});
+            let {genuId, userId} = req.query
+            let products;
+            if (genuId) {
+                products = await Product.findAndCountAll({where: {genuId}});
+            }
+            if (userId) {
+                products = await Product.findAndCountAll({where: {userId}});
+            }
+            if (!genuId && !userId) {
+                products = await Product.findAndCountAll();
+            }
 
             return res.json(products)
         } catch (e) {
@@ -45,7 +59,6 @@ class ProductController {
 
         return res.json(product)
     }
-
 }
 
 module.exports = new ProductController()

@@ -3,6 +3,7 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {createInformation} from "../../http/userAPI";
 import jwtDecode from "jwt-decode";
+import {SELLER_ROUTE} from "../../utils/consts";
 
 const addInformation = observer(({show, onHide}) => {
 
@@ -52,7 +53,7 @@ const addInformation = observer(({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={addInfo}>Изменить</Button>
+                <Button variant="outline-success" onClick={addInfo} href={SELLER_ROUTE}>Изменить</Button>
             </Modal.Footer>
         </Modal>
     );

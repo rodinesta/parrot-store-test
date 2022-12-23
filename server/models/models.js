@@ -33,8 +33,9 @@ const Comment = sequelize.define('comment', {
 const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING},
-    information: {type: DataTypes.STRING},
-    price: {type: DataTypes.INTEGER}
+    information: {type: DataTypes.TEXT},
+    price: {type: DataTypes.INTEGER},
+    img: {type: DataTypes.TEXT}
 })
 
 const Genus = sequelize.define('genu', {

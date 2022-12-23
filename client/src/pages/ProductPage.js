@@ -23,6 +23,8 @@ const ProductPage = () => {
                         <text style={{fontSize:26}}>{product.information}</text>
                     </div>
                     <text style={{fontSize:26}}>{product.price} рублей</text>
+                    <br/>
+                    <text style={{fontSize:26}}>{product.userId} рублей</text>
                 </Col>
             </Row>
         </Container>
