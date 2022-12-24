@@ -10,7 +10,7 @@ const ProductItem = ({product}) => {
             <Card style={{width: 150, cursor: 'pointer'}} border={"light"}>
                 <Image width={150} height={150} src={process.env.REACT_APP_API_URL + product.img}/>
                 <div className="mt-2">{product.title}</div>
-                <div>{product.price}</div>
+                <div>{product.price} ₽</div>
             </Card>
         </Col>
     );
