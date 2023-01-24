@@ -59,6 +59,19 @@ class ProductController {
 
         return res.json(product)
     }
+
+    async delete(req, res, next) {
+        try{
+            const {id} = req.params
+            await Product.destroy({
+                where: {id}
+            })
+
+            return res.json()
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
 }
 
 module.exports = new ProductController()

@@ -5,6 +5,7 @@ import {createProduct, getGenus} from "../../http/productAPI";
 import {observer} from "mobx-react-lite";
 import {toFormData} from "axios";
 import jwtDecode from "jwt-decode";
+import {SELLER_ROUTE} from "../../utils/consts";
 
 const CreateProduct = observer(({show, onHide}) => {
     const {product} = useContext(Context)
@@ -23,8 +24,6 @@ const CreateProduct = observer(({show, onHide}) => {
     }, [])
 
     const addProduct = () => {
-        // const selectedGenus = product.selectedGenus.id
-
         const formData = new FormData()
         formData.append('title', title)
         formData.append('information', information)
@@ -33,7 +32,6 @@ const CreateProduct = observer(({show, onHide}) => {
         formData.append('userId', token.id)
         formData.append('img', file)
         createProduct(formData).then(data => onHide())
-        // await createProduct(title, price, information, selectedGenus, file).then(data => onHide())
     }
 
     return (
@@ -87,7 +85,7 @@ const CreateProduct = observer(({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={addProduct}>Добавить</Button>
+                <Button variant="outline-success" onClick={addProduct} href={SELLER_ROUTE}>Добавить</Button>
             </Modal.Footer>
         </Modal>
     );

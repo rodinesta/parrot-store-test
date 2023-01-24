@@ -12,7 +12,6 @@ class RoleController {
         const role = await Role.findAll()
         return res.json(role)
     }
-
 }
 
 module.exports = new RoleController()

@@ -12,7 +12,6 @@ class GenusController {
         const genus = await Genus.findAll()
         return res.json(genus)
     }
-
 }
 
 module.exports = new GenusController()

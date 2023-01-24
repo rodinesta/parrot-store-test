@@ -19,3 +19,8 @@ export const getGenus = async () => {
     const {data} = await $host.get('api/genus')
     return data
 }
+
+export const deleteProduct = async (id) => {
+    const {data} = await $host.delete('api/product/' + id)
+    return data
+}
